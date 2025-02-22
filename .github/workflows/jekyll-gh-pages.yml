@@ -41,14 +41,15 @@ jobs:
       - name: Nowy plik utworz
         run: echo "nowy Plik - $qrCode" >> ./nowykodqr.txt
       - name: Podmien variable
+        id: podmiana
         run: echo "zamiana wartosci" >> $qrCode
+        env:
+          qrCodeNew: https://sebex133.github.io/github-actions-advanced-workflow-qr-code/
       - name: Generate QR Code
         id: qrcode_generate
         uses: hammadj/qr-code-generator@master
-        env:
-          qrCodeNew: https://sebex133.github.io/github-actions-advanced-workflow-qr-code/
         with:
-          content: ${{ steps.qrcode_generate.qrCodeNew }}
+          content: ${{ steps.podmiana.qrCodeNew }}
       - name: Show QR code
         run: echo "${{ steps.qrcode_generate.outputs.text }} lub ${{ steps.qrcode_generate.outputs.text }}"
       - name: Put QR code to HTML file
