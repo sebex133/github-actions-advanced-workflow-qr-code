@@ -36,8 +36,6 @@ jobs:
         run: echo "$PWD"
       - name: Pokaz pliki
         run: ls -la ./
-      - name: Pokaz URL strony
-        run: echo ${{ steps.deployment.outputs.page_url }}
       - name: Dodaj url do istniejacego txt
         run: echo "dodaj na koniec pliku - $qrCode" >> ./mojkodqr.txt
       - name: Nowy plik utworz
@@ -50,7 +48,7 @@ jobs:
         env:
           qrCodeNew: https://sebex133.github.io/github-actions-advanced-workflow-qr-code/
         with:
-          content: ${{ qrCodeNew }}
+          content: ${{ steps.qrcode_generate.qrCodeNew }}
       - name: Show QR code
         run: echo "${{ steps.qrcode_generate.outputs.text }} lub ${{ steps.qrcode_generate.outputs.text }}"
       - name: Put QR code to HTML file
@@ -76,3 +74,5 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+      - name: Pokaz URL strony
+        run: echo ${{ steps.deployment.outputs.page_url }}
