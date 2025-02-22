@@ -50,11 +50,13 @@ jobs:
         env:
           qrCodeNew: https://sebex133.github.io/github-actions-advanced-workflow-qr-code/
         with:
-          content: $qrCodeNew
+          content: ${{ qrCodeNew }}
       - name: Show QR code
         run: echo "${{ steps.qrcode_generate.outputs.text }} lub ${{ steps.qrcode_generate.outputs.text }}"
       - name: Put QR code to HTML file
         run: echo "<html><head><title>QR</title></head><body><img src=\"${{ steps.qrcode_generate.outputs.data }}\"/></body></html>" >> ./finalnyQrCode.html
+      - name: Generate dynamic HTML file
+        run: echo "<html><head><title>QR</title></head><body><p>Scan below QR code</p><img src=\"${{ steps.qrcode_generate.outputs.data }}\"/></body></html>" >> ./index.html
       - name: Build with Jekyll
         uses: actions/jekyll-build-pages@v1
         with:
